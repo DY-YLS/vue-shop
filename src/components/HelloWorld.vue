@@ -35,6 +35,13 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods: {
+  },
+  created () {
+    this.axios.get('http://47.115.124.102:8888/api/private/v1/login?username=admin&password=123456').then(res => {
+      console.log(res.data)
+    })
   }
 }
 </script>
