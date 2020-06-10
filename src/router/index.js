@@ -16,7 +16,25 @@ const routes = [
   },
   {
     path: '/home',
-    component: () => import('../components/home')
+    component: () => import('../components/home'),
+    children: [{
+      //当路径为 /home时，welcome会渲染在home的<router-view>中
+      path: '',
+      component: () => import('../components/welcome')
+    },
+      {
+        path: '/users',
+        component: () => import('../components/user/users')
+      },
+      {
+        path: '/params',
+        component: () => import('../components/goods/params')
+      },
+      {
+        path: '/reports',
+        component: () => import('../components/reports/reports')
+      }
+    ]
   }
   /* {
     path: '/',
@@ -41,7 +59,6 @@ const router = new VueRouter({
 通过全局路由导航守卫来控制页面访问权限
 */
 router.beforeEach((to, from, next) => {
-  console.log(to)
   if (['/', '/login'].includes(to.path)) return next()
   let tokenValue = window.sessionStorage.getItem('token')
   if (!tokenValue) {
@@ -49,4 +66,5 @@ router.beforeEach((to, from, next) => {
   }
   next()
 })
+
 export default router
